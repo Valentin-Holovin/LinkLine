@@ -37,7 +37,7 @@ export const LoginScreen = () => {
             <Text style={styles.linkText}>Register an account</Text>
           </TouchableOpacity>
 
-          <Button title='Login' />
+          <Button title='Login' onPress={() => navigate(Routes.TABS)} />
         </View>
       </View>
 

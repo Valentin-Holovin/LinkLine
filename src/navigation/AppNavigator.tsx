@@ -10,6 +10,7 @@ import { AuthNavigator } from './AuthNavigator';
 import { 
   
 } from '../screens';
+import { TabsNavigator } from './TabsNavigator';
 
 const AppStack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ export const AppNavigator = () => {
                 headerShown: false,
               }}>
                 <AppStack.Screen name={Routes.AUTH} component={AuthNavigator}  />
+                <AppStack.Screen name={Routes.TABS} component={TabsNavigator} />
             </AppStack.Navigator>
         </NavigationContainer>
     );
