@@ -1,0 +1,9 @@
+export enum Routes {
+    AUTH = 'AUTH',
+
+    WELCOME_SCREEN = 'WELCOME_SCREEN',
+    REGISTRATION_SCREEN = 'REGISTRATION_SCREEN',
+    LOG_IN_SCREEN = 'LOG_IN_SCREEN',
+
+    TABS = 'TABS',
+};
