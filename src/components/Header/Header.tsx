@@ -1,17 +1,19 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { BackLeftIcon } from '../../assets'
+import { BackLeftIcon, PlusIcon } from '../../assets'
 import { Colors } from '../../theme'
 import { goBack } from '../../navigation/NavigationService'
 
 interface Props {
     title: string
-    isBack?: boolean 
+    isBack?: boolean
+    isAddButton?: boolean 
 }
 
 export const Header: React.FC<Props> = ({
     title,
-    isBack
+    isBack,
+    isAddButton
 }) => {
 
   const handleNavigation = () => {
@@ -33,6 +35,12 @@ export const Header: React.FC<Props> = ({
       <Text style={styles.title}>
         {title}
       </Text>
+
+      {isAddButton && (
+        <TouchableOpacity style={styles.addButton}>
+          <PlusIcon />
+        </TouchableOpacity>
+      )}
       
     </View>
   )
@@ -51,7 +59,12 @@ const styles = StyleSheet.create({
     },
     backIcon: {
       position: 'absolute',
-      top: 6,
+      top: 5,
       left: 20,
+    },
+    addButton: {
+      position: 'absolute',
+      top: 5,
+      right: 20,
     }
 })

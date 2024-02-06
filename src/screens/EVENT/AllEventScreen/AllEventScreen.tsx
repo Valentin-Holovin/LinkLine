@@ -1,11 +1,17 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet, FlatList, Text } from 'react-native'
 import React from 'react'
 import { Colors } from '../../../theme'
+import { EmptyPostComponents, Header } from '../../../components'
 
 export const AllEventScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>AllEventScreen</Text>
+      <Header title='All event' isAddButton />
+
+      <FlatList
+        data={[]}
+        ListEmptyComponent={<EmptyPostComponents />}
+      />
     </View>
   )
 }
@@ -13,6 +19,6 @@ export const AllEventScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   }
 })
