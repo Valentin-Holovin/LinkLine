@@ -46,7 +46,7 @@ export const TabsNavigator = () => {
                     tabBarIcon: ({ focused }) => (
                         <TabBarButton 
                           focused={focused} 
-                          icon={EventIcon as React.FC<{ color: string }>} 
+                          icon={EventIcon} 
                         />
                     )
                 }}
@@ -58,7 +58,7 @@ export const TabsNavigator = () => {
                     tabBarIcon: ({ focused }) => (
                         <TabBarButton 
                           focused={focused} 
-                          icon={MessageIcon as React.FC<{ color: string }>} 
+                          icon={MessageIcon} 
                         />
                     )
                 }} 
@@ -70,7 +70,7 @@ export const TabsNavigator = () => {
                     tabBarIcon: ({ focused }) => (
                         <TabBarButton 
                           focused={focused} 
-                          icon={ProfileIcon as React.FC<{ color: string }>} 
+                          icon={ProfileIcon} 
                         />
                     )
                 }} 
