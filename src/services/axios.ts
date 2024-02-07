@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-export const BASE_URL = 'http://localhost:5000/'
+export const BASE_URL = ' https://560c-188-163-40-63.ngrok-free.app'
 
 const axiosInstance: AxiosInstance = axios.create({
   headers: {

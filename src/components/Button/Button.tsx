@@ -1,24 +1,35 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { Colors } from '../../theme';
 
 interface Props {
-    title: string;
-    onPress?: () => void
+  title: string;
+  onPress?: () => void;
+  loading?: boolean; 
+  disabled?: boolean; 
 }
 
 export const Button: React.FC<Props> = ({
-    title,
-    onPress,
+  title,
+  onPress,
+  loading,
+  disabled
 }) => {
   return (
     <TouchableOpacity
         style={styles.container}
         onPress={onPress}
+        disabled={disabled}
     >
-      <Text style={styles.title}>
-        {title}
-      </Text>
+      {loading 
+        ? (
+        <ActivityIndicator size={'small'} color={Colors.white}/>
+      ) : (
+        <Text style={styles.title}>
+          {title}
+        </Text>
+      )}
+      
     </TouchableOpacity>
   )
 }

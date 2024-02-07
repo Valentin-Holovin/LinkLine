@@ -2,9 +2,12 @@ import { AxiosPromise } from 'axios';
 import axios from '../../services/axios';
 
 export const apiAuth = new (class Api {
-    login(email: string, password: string): AxiosPromise {
+    login(
+        email: string, 
+        password: string
+    ): AxiosPromise {
         return axios({
-            url: 'auth/login',
+            url: '/auth/login',
             method: 'post',
             data: {
                 email: email,
@@ -12,9 +15,13 @@ export const apiAuth = new (class Api {
             }
         })
     };
-    registration(email: string, password: string, name: string): AxiosPromise {
+    registration(
+        email: string, 
+        password: string, 
+        name: string
+    ): AxiosPromise {
         return axios({
-            url: 'auth/register',
+            url: '/auth/register',
             method: 'post',
             data: {
                 email: email,

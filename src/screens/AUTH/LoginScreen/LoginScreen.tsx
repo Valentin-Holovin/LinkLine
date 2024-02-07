@@ -4,22 +4,51 @@ import { Button, Header, Input } from '../../../components'
 import { Colors } from '../../../theme'
 import { navigate } from '../../../navigation/NavigationService'
 import { Routes } from '../../../navigation/Routes'
+import { fetchLogin, setEmail, setPassword } from '../../../store/reducers/authReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../../store'
+import { useValidation } from '../../../hooks'
 
 export const LoginScreen = () => {
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { 
+    email, 
+    password, 
+    loading 
+  } = useSelector((state: RootState) => state.authReducer)
+
+  const { 
+    validateEmail, 
+    validatePassword,
+    focused, 
+    onFocus, 
+    onBlur 
+  } = useValidation();
 
   const handleNavigation = () => {
     navigate(Routes.REGISTRATION_SCREEN)
   }
 
+  const handleLogin = () => {
+    dispatch(fetchLogin({ email: email || '', password: password || '' }));
+  };
+
   return (
     <View style={styles.container}>
-      <Header title='Login' isBack />
+      <Header title='Login' />
 
       <View style={styles.wrapper}>
         <View style={styles.formWrapper}>
           <Input 
             lable='Email'
             placeholder='Email'
+            value={email}
+            onChangeText={(text) => dispatch(setEmail(text))}
+            error={focused ? validateEmail(email).error : undefined}
+            onFocus={onFocus}
+            onBlur={onBlur}
           />
 
           <Input 
@@ -27,6 +56,11 @@ export const LoginScreen = () => {
             placeholder='Password'
             marginTop={22}
             secureInput
+            value={password}
+            onChangeText={(text) => dispatch(setPassword(text))}
+            error={focused ? validatePassword(password).error : undefined}
+            onFocus={onFocus}
+            onBlur={onBlur}
           />
         </View>
 
@@ -37,10 +71,14 @@ export const LoginScreen = () => {
             <Text style={styles.linkText}>Register an account</Text>
           </TouchableOpacity>
 
-          <Button title='Login' onPress={() => navigate(Routes.TABS)} />
+          <Button 
+            title='Login'
+            loading={loading} 
+            onPress={handleLogin}
+          />
         </View>
-      </View>
 
+      </View>
     </View>
   )
 }

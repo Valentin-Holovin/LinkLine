@@ -1,22 +1,30 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Colors } from '../../theme'
 import { EyeHideIcon, EyeIcon } from '../../assets'
 
 interface Props {
-    lable?: string,
-    placeholder?: string
-    value?: string
-    marginTop?: number
-    secureInput?: boolean
+  lable?: string;
+  placeholder?: string;
+  value?: string;
+  marginTop?: number;
+  secureInput?: boolean;
+  onChangeText?: (value: string) => void;
+  error?: string | null;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export const Input: React.FC<Props> = ({
-    lable,
-    placeholder,
-    value,
-    marginTop,
-    secureInput
+  lable,
+  placeholder,
+  value,
+  marginTop,
+  secureInput,
+  onChangeText,
+  error,
+  onBlur,
+  onFocus
 }) => {
 
   const [isSecure, setIsSecure] = useState(secureInput)
@@ -30,11 +38,21 @@ export const Input: React.FC<Props> = ({
       <Text style={styles.lable}>{lable}</Text>
 
       <TextInput
-        style={[styles.input, { paddingRight: secureInput ? 38 : 0 }]}
+        style={[
+          styles.input, 
+          { paddingRight: secureInput ? 38 : 0, borderColor: error ? Colors.red : Colors.black }
+        ]}
         placeholder={placeholder}
         value={value}
         secureTextEntry={isSecure}
+        onChangeText={onChangeText}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
+
+      {error && (
+        <Text style={styles.errorText}>{error}</Text>
+      )}
 
       {secureInput && (
         <TouchableOpacity
@@ -57,7 +75,6 @@ const styles = StyleSheet.create({
     input: {
       height: 48,
       borderRadius: 8,
-      borderColor: Colors.black,
       borderWidth: 1,
       paddingLeft: 14,
     },
@@ -65,5 +82,10 @@ const styles = StyleSheet.create({
       position: 'absolute',
       top: 38,
       right: 12  
+    },
+    errorText: {
+      color: Colors.red,
+      fontSize: 12,
+      marginTop: 6
     }
 })
