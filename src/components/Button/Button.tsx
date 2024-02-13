@@ -17,7 +17,7 @@ export const Button: React.FC<Props> = ({
 }) => {
   return (
     <TouchableOpacity
-        style={styles.container}
+        style={[styles.container, { backgroundColor: disabled ? Colors.gray01 : Colors.blue01 }]}
         onPress={onPress}
         disabled={disabled}
     >
@@ -37,7 +37,6 @@ export const Button: React.FC<Props> = ({
 const styles = StyleSheet.create({
   container: {
     borderRadius: 8,
-    backgroundColor: Colors.blue01,
     height: 48,
     width: '100%',
     alignItems: 'center',

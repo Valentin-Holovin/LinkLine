@@ -59,6 +59,40 @@ export const fetchLogin = createAsyncThunk(
   }
 );
 
+export const fetchRegistration = createAsyncThunk(
+  'auth/registration',
+  async ({ email, password, name }: { email: string; password: string; name: string }, { dispatch }) => {
+    try {
+      dispatch(setLoading(true));
+      const response = await apiAuth.registration(email, password, name);
+      if (response.status === 200) {
+        AsyncStorage.setItem('accessToken', response.data.accessToken);
+        AsyncStorage.setItem('refreshToken', response.data.refreshToken);
+
+        dispatch(setAccessToken(response.data.accessToken));
+        dispatch(setRefreshToken(response.data.refreshToken));
+
+        dispatch(setEmail(''));
+        dispatch(setPassword(''));
+        dispatch(setName(''));
+
+        navigate(Routes.TABS);
+
+        return response.data;
+      }
+    } catch (error: any) {
+      dispatch(setError(error.message || 'Error during registration'));
+      Toast.show({
+        type: 'error',
+        text1: 'Error during registration',
+        text2: error.message,
+      });
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }
+);
+
 export const fetchLogout = createAsyncThunk(
   'auth/logout',
   async (_, {getState, dispatch }) => {
