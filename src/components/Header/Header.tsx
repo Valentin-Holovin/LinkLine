@@ -1,19 +1,23 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { BackLeftIcon, PlusIcon } from '../../assets'
-import { Colors } from '../../theme'
-import { goBack } from '../../navigation/NavigationService'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { BackLeftIcon, LogoutIcon, PlusIcon } from '../../assets';
+import { Colors } from '../../theme';
+import { goBack } from '../../navigation/NavigationService';
 
 interface Props {
-    title: string
-    isBack?: boolean
-    isAddButton?: boolean 
+  title: string
+  isBack?: boolean
+  isAddButton?: boolean 
+  isLogoutButton?: boolean 
+  handleLogout?: () => void
 }
 
 export const Header: React.FC<Props> = ({
-    title,
-    isBack,
-    isAddButton
+  title,
+  isBack,
+  isAddButton,
+  isLogoutButton,
+  handleLogout
 }) => {
 
   const handleNavigation = () => {
@@ -37,8 +41,17 @@ export const Header: React.FC<Props> = ({
       </Text>
 
       {isAddButton && (
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity style={styles.rightButton}>
           <PlusIcon />
+        </TouchableOpacity>
+      )}
+
+      {isLogoutButton && (
+        <TouchableOpacity 
+          style={styles.rightButton}
+          onPress={handleLogout} 
+        >
+          <LogoutIcon />
         </TouchableOpacity>
       )}
       
@@ -62,9 +75,9 @@ const styles = StyleSheet.create({
       top: 5,
       left: 20,
     },
-    addButton: {
+    rightButton: {
       position: 'absolute',
       top: 5,
-      right: 20,
+      right: 23,
     }
 })

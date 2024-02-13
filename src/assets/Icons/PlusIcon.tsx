@@ -4,9 +4,9 @@ import Svg, { Path } from "react-native-svg"
 export function PlusIcon() {
   return (
     <Svg
-      width={34}
-      height={34}
-      viewBox="0 0 34 34"
+      width={35}
+      height={35}
+      viewBox="0 0 35 35"
       fill="none"
     >
       <Path

@@ -29,5 +29,11 @@ export const apiAuth = new (class Api {
                 name: name
             }
         })
+    };
+    logout(): AxiosPromise {
+        return axios({
+            url: '/auth/logout',
+            method: 'post',
+        })
     }
 })

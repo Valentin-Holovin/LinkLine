@@ -31,14 +31,21 @@ export const fetchLogin = createAsyncThunk(
       try {
         dispatch(setLoading(true));
         const response = await apiAuth.login(email, password);
-        if (response.status === 200) {
-          AsyncStorage.setItem('accessToken', response.data.accessToken);
-          AsyncStorage.setItem('refreshToken', response.data.refreshToken);
-          navigate(Routes.TABS);
-          dispatch(setEmail(''))
-          dispatch(setPassword(''))
-          return response.data;
-        }
+          if (response.status === 200) {
+
+            AsyncStorage.setItem('accessToken', response.data.accessToken);
+            AsyncStorage.setItem('refreshToken', response.data.refreshToken);
+
+            dispatch(setAccessToken(response.data.accessToken));
+            dispatch(setRefreshToken(response.data.refreshToken));
+
+            dispatch(setEmail(''))
+            dispatch(setPassword(''))
+
+            navigate(Routes.TABS);
+            
+            return response.data;
+          }
       } catch (error: any) {
         dispatch(setError(error.message || 'Error during login'));
         Toast.show({
@@ -49,7 +56,39 @@ export const fetchLogin = createAsyncThunk(
       } finally {
         dispatch(setLoading(false));
       }
-      }
+  }
+);
+
+export const fetchLogout = createAsyncThunk(
+  'auth/logout',
+  async (_, {getState, dispatch }) => {
+    try {
+      dispatch(setLoading(true));
+
+      await apiAuth.logout();
+
+      Toast.show({
+        type: 'success',
+        text1: 'Successful logout',
+      });
+
+      AsyncStorage.removeItem('accessToken');
+      AsyncStorage.removeItem('refreshToken');
+
+      dispatch(setAccessToken(null));
+      dispatch(setRefreshToken(null));
+
+      navigate(Routes.AUTH);
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error during logout',
+        text2: error.message
+      });
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }
 );
 
 const authSlice = createSlice({
@@ -73,6 +112,12 @@ const authSlice = createSlice({
         state.error = action.payload;
         state.loading = false;
       },
+      setAccessToken: (state, action) => {
+        state.accessToken = action.payload;
+      },
+      setRefreshToken: (state, action) => {
+        state.refreshToken = action.payload;
+      },
     },
 });
 
@@ -82,6 +127,8 @@ export const {
     setName, 
     setPassword,
     setError,
+    setAccessToken,
+    setRefreshToken
 } = authSlice.actions
 
 export default authSlice.reducer;
